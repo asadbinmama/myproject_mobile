@@ -11,17 +11,16 @@ export class OrderSummaryPage implements OnInit {
 
   cart: any[] = [];  // เก็บรายการสินค้าในตะกร้า
   totalAmount: number = 0;  // เก็บจำนวนเงินรวม
-  cartItems: any[] = [];
 
-  constructor(private router: Router,private cartService: CartService) { 
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation && navigation.extras.state) {
-      this.cart = navigation.extras.state['cart'];  // รับข้อมูลตะกร้าจาก state
-      this.calculateTotal();  // คำนวณราคาทั้งหมด
-    }
-  }
+  constructor(private router: Router, private cartService: CartService) { }
 
   ngOnInit() {}
+
+  // ฟังก์ชันที่เรียกเมื่อเข้ามายังหน้า (ทุกครั้งที่เข้ามาใหม่)
+  ionViewWillEnter() {
+    this.cart = this.cartService.getCart();  // ดึงข้อมูลตะกร้าจาก CartService
+    this.calculateTotal();  // คำนวณยอดรวม
+  }
 
   // ฟังก์ชันคำนวณยอดรวม
   calculateTotal() {
@@ -33,8 +32,4 @@ export class OrderSummaryPage implements OnInit {
     console.log('ยืนยันการสั่งซื้อ', this.cart);
     // สามารถทำ API call เพื่อส่งข้อมูลการสั่งซื้อไปที่ backend ได้ที่นี่
   }
-  ionViewWillEnter() {
-    this.cartItems = this.cartService.getCart();  // ดึงข้อมูลสินค้าที่อยู่ในตะกร้ามาแสดง
-  }
-
 }

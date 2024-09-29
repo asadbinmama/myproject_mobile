@@ -72,9 +72,9 @@ export class Tab3Page {
   }
 
   // ฟังก์ชันเพิ่มสินค้าไปยังตะกร้า
-  addToCart(item: any, quantity: number) {  // ระบุ type ของ item และ quantity
-    this.cart.push({ ...item, quantity });  // เพิ่มสินค้าพร้อมจำนวนไปยังตะกร้า
-    console.log('เพิ่มไปยังตะกร้า:', item, 'จำนวน:', quantity);
+  addToCart(item: any, quantity: number) {
+    const itemToAdd = { ...item, quantity: Number(quantity) };  // แปลงเป็นตัวเลข
+    this.cartService.addToCart(itemToAdd);  // ส่งสินค้าไปยัง CartService
     this.updateCart();  // อัปเดตจำนวนสินค้าในตะกร้า
   }
 

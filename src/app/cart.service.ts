@@ -11,11 +11,11 @@ export class CartService {
   addToCart(item: any) {
     const existingItem = this.cart.find(cartItem => cartItem.item_id === item.item_id);
     if (existingItem) {
-      existingItem.quantity += item.quantity;  // เพิ่มจำนวนถ้าสินค้าซ้ำ
+      existingItem.quantity += Number(item.quantity);  // แปลงเป็นตัวเลขก่อนบวก
     } else {
-      this.cart.push(item);  // เพิ่มสินค้าใหม่
+      this.cart.push({ ...item, quantity: Number(item.quantity) });  // แปลงเป็นตัวเลข
     }
-    console.log('Cart:', this.cart);  // ตรวจสอบตะกร้าผ่าน console
+    console.log('Cart:', this.cart);
   }
 
   // ฟังก์ชันดึงรายการสินค้าทั้งหมดในตะกร้า
